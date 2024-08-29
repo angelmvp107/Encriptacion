@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptador/Desencriptador ASCII-Binario</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #output {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Encriptador/Desencriptador ASCII-Binario</h1>
+        <textarea id="input" rows="5" placeholder="Ingrese su texto aquí"></textarea>
+        <button id="encryptBtn">Encriptar</button>
+        <button id="decryptBtn">Desencriptar</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const input = document.getElementById('input');
+        const output = document.getElementById('output');
+        const encryptBtn = document.getElementById('encryptBtn');
+        const decryptBtn = document.getElementById('decryptBtn');
+
+        function toBinary(n) {
+            return n.toString(2).padStart(8, '0');
+        }
+
+        function encrypt(text) {
+            return text.split('').map(char => {
+                const asciiCode = char.charCodeAt(0);
+                return toBinary(asciiCode);
+            }).join(' ');
+        }
+
+        function decrypt(binary) {
+            return binary.split(' ').map(bin => {
+                if (bin) {
+                    const asciiCode = parseInt(bin, 2);
+                    return String.fromCharCode(asciiCode);
+                }
+            }).join('');
+        }
+
+        encryptBtn.addEventListener('click', () => {
+            const text = input.value;
+            output.textContent = encrypt(text);
+        });
+
+        decryptBtn.addEventListener('click', () => {
+            const binary = input.value;
+            output.textContent = decrypt(binary);
+        });
+    </script>
+</body>
+</html>
